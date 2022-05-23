@@ -38,9 +38,10 @@ def week_number(request):
     '''
     # # Делаем проверку на номер недели первого дня выбранного года
     # first_day_week = datetime.datetime(a_date.year,1,1).isocalendar()[1]
-    #
+    month_num = a_date.month
+
     # # Проверка на день с первой "неправильной" недели
-    # if first_day_week > 1 and a_week_number > 1:
+    # if first_day_week > 1 and 50 < a_week_number < 53 and month_num == 1:
     #     a_week_number = 1
     # # Прибавка к номеру всех последующих недель
     # elif first_day_week > 1:
