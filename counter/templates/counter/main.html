@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Счетчик недель</title>
+</head>
+<body>
+    <div>Введите дату:</div>
+    <div>
+        <input type="text" placeholder="Введите дату в формате 'дд.мм.гггг'" style="width: 250px;" id="date">
+        <button id="send">Отправить</button>
+    </div>
+    <div id="answer">
+
+    </div>
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+
+        $('#send').on('click', function(){
+            $.ajax({
+                type: "POST",
+                headers: {"X-CSRFToken":"{{csrf_token}}"},
+                data: {'date': $('#date').val()},
+                url: '{% url 'counter:counter' %}',
+                success:
+                    function(data){
+                        $('#answer').empty()
+                        $('#answer').append("<p>Номер недели: " + data.answer + "</p>")
+                    },
+                error: function (error) {
+                        $('#answer').empty()
+                        $('#answer').append(error.responseJSON.answer)
+                     }
+            })
+
+        })
+    })
+</script>
+</html>
